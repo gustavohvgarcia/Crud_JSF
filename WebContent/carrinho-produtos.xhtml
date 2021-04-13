@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<ui:composition 
+template="./index.xhtml"
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="pagina">
+			
+			<h:form id="carrinhoCompras">
+			   <p:outputLabel value="Nenhum contato escolhido" 
+			   		rendered="#{empty carrinhoController.listaCarrinho}"/>
+			   <p:dataTable id="tabelaCarrinho" var="produto" 
+			   			value="#{carrinhoController.listaCarrinho}" 
+			   			rendered="#{not empty carrinhoController.listaCarrinho}" >
+			      
+			      <p:column headerText="Nome do produto">
+			         <h:outputText id="nomeInput" value="#{produto.nome}"/>
+			      </p:column>
+			 
+			      <p:column headerText="Preço">
+			         <h:outputText id="precoInput" value="#{produto.preco}"/>
+			       </p:column>
+			 
+			       <p:column headerText="Quantidade">
+			         <p:inputText id="emailInput" value="#{contato.email}"/>
+			       </p:column>
+			 
+			       
+			       
+			       <p:column>
+	           	   		<p:commandButton update="carrinhoCompras" value="Remover do Carrinho" icon="ui-icon-closethick"
+	                        action="#{carrinhoController.remover(produto)}"
+	                        styleClass="ui-priority-primary">
+	               		</p:commandButton>
+	        	   </p:column>
+			</p:dataTable>
+		</h:form>
+		
+	</ui:define>
+
+</ui:composition>

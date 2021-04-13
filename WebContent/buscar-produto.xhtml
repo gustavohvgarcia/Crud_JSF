@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<ui:composition 
+template="./index.xhtml"
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://java.sun.com/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui">
+
+		<ui:define name="pagina">
+		
+				<h:form id="produtos">
+				
+				   <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
+				   		<p:outputLabel for="input" value="Nome:"/>
+				   		<p:inputText id="input" value="#{produtoController.produto.nome}"/>
+		           		<p:commandButton update="produtos" value="Buscar"
+		                         action="#{produtoController.buscarPorNome}">
+		           		</p:commandButton>
+				   </h:panelGrid>
+		           
+		           <p:growl id="growl" />
+				  
+				   <p:dataTable id="tabelaProdutos" var="produto" 
+				   			value="#{produtoController.listaProdutos}" 
+				   			rendered="#{not empty produtoController.listaProdutos}" >
+				      
+				      <p:column headerText="Nome">
+				         <h:inputText id="nomeInput" value="#{produto.nome}"/>
+				      </p:column>
+				 
+				      <p:column headerText="Preço">
+				         <h:inputText id="precoInput" value="#{produto.preco}"/>
+				       </p:column>
+				 
+				       <p:column headerText="Quantidade">
+				         <h:inputText id="quantidadeInput" value="#{produto.quantidade}"/>
+				       </p:column>
+				 
+				 		 <p:column>
+		           	   		<p:commandButton update="tabelaProdutos"  value="Excluir produto" icon="ui-icon-closethick"
+		                        action="#{produtoController.remover(produto)}"
+		                        styleClass="ui-priority-primary">
+		               		</p:commandButton>
+		               		<p:growl id="growl"/>
+		        	   </p:column>
+		        	   
+		        	<p:column>
+	        	   		<p:commandButton update="produtos:growl" value="Alterar" icon="ui-icon-update"
+	                        action="#{produtoController.alterar(produto)}">
+	                        <f:ajax execute="@form" render="@form"/>
+	               		</p:commandButton>
+	        	   </p:column>
+				       
+				   <p:column>
+	        	   		<p:commandButton update="produtos:growl" value="Adicionar ao carrinho" icon="ui-icon-check"
+	                        action="#{carrinhoController.adicionarEscolhido(produto)}">
+	               		</p:commandButton>
+	        	   </p:column>
+				       
+				</p:dataTable>
+			</h:form>
+			
+		</ui:define>
+
+</ui:composition>
